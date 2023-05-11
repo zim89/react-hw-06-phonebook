@@ -1,8 +1,13 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import classNames from 'classnames';
 import './AddContactForm.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from 'redux/actions';
+import { getContacts } from 'redux/selectors';
+import { Accent } from 'components/App/Styled';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const INITIAL_VALUES = {
   name: '',
@@ -30,9 +35,42 @@ const addContactSchema = yup.object().shape({
     ),
 });
 
-const AddContactForm = ({ onSubmit }) => {
+const AddContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
   const handleSubmit = (values, { resetForm }) => {
-    onSubmit({ ...values });
+    const { name, number } = values;
+
+    const isIncludeName = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    const isIncludeNumber = contacts.some(
+      contact =>
+        contact.number.replace('+', '').split('-').join('') ===
+        number.replace('+', '').split('-').join('')
+    );
+
+    if (isIncludeName) {
+      toast.error(() => (
+        <div>
+          <Accent>{name}</Accent> is already in contacts
+        </div>
+      ));
+      resetForm();
+      return;
+    }
+    if (isIncludeNumber) {
+      toast.error(() => (
+        <div>
+          phonenumber <Accent>{number}</Accent> is already in contacts
+        </div>
+      ));
+      resetForm();
+      return;
+    }
+
+    dispatch(addContact(name, number));
     resetForm();
   };
 
@@ -87,10 +125,6 @@ const AddContactForm = ({ onSubmit }) => {
       </Formik>
     </div>
   );
-};
-
-AddContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default AddContactForm;
