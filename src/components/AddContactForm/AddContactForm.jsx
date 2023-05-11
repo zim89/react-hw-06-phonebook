@@ -57,7 +57,6 @@ const AddContactForm = () => {
           <Accent>{name}</Accent> is already in contacts
         </div>
       ));
-      resetForm();
       return;
     }
     if (isIncludeNumber) {
@@ -66,7 +65,6 @@ const AddContactForm = () => {
           phonenumber <Accent>{number}</Accent> is already in contacts
         </div>
       ));
-      resetForm();
       return;
     }
 
