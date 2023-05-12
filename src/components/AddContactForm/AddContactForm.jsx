@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import classNames from 'classnames';
 import './AddContactForm.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'redux/actions';
+import { addContact } from 'redux/contactsSlice';
 import { getContacts } from 'redux/selectors';
 import { Accent } from 'components/App/Styled';
 import { toast } from 'react-toastify';
