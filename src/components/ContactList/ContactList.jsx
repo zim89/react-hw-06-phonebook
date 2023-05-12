@@ -1,8 +1,8 @@
 import React from 'react';
 import './ContactList.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
+import { getFilter } from 'redux/filterSlice';
+import { deleteContact, getContacts } from 'redux/contactsSlice';
 
 const getFilteredContacts = (contacts, filter) => {
   const normalizedFilter = filter.toLowerCase();
