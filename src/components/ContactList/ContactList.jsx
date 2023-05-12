@@ -1,22 +1,23 @@
 import React from 'react';
 import './ContactList.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from 'redux/filterSlice';
-import { deleteContact, getContacts } from 'redux/contactsSlice';
+import { getContacts, getFilteredContacts } from 'redux/selectors';
+import { deleteContact } from 'redux/contactsSlice';
 
-const getFilteredContacts = (contacts, filter) => {
-  const normalizedFilter = filter.toLowerCase();
+// const getFilteredContacts = (contacts, filter) => {
+//   const normalizedFilter = filter.toLowerCase();
 
-  return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter)
-  );
-};
+//   return contacts.filter(contact =>
+//     contact.name.toLowerCase().includes(normalizedFilter)
+//   );
+// };
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
-  const filteredContacts = getFilteredContacts(contacts, filter);
+  console.log(contacts);
+  // const filter = useSelector(getFilter);
+  const filteredContacts = useSelector(getFilteredContacts);
 
   return (
     <ul className="contactList">
